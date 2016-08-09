@@ -1,81 +1,107 @@
 package com.week.two.day.one;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BattingAverage {
+
 	static Scanner numberOfAtBats = new Scanner(System.in);
-	static double hits;
-	static double atBats;
-	static double single;
-	static double Double;
-	static double triple;
-	static double homerun;
-	static double average;
-	static double bases;
-	static double slugging;
+	static float hits;
+	static float atBats;
+	static float single;
+	static float Double;
+	static float triple;
+	static float homerun;
+	static float average;
+	static float bases;
+	static float slugging;
 
 	public static void main(String[] args) {
+
 		BattingAverage batter = new BattingAverage();
 		String name = null;
 
-		batter.print();
+		batter.print(name);
 		batter.calculateAverage();
 		batter.calculateSlugging();
 		batter.printAll(name);
 
 	}
 
-	public static void print() {
+	public static void print(String name) {
 
 		System.out.println("Please enter the number of at-bats");
-		atBats = numberOfAtBats.nextInt();
-		
-		if(atBats < 0){
-	System.out.println("ERROR: CANNOT HAVE NEGATIVE at-bats");
-	System.exit(0);
-	
+
+		try {
+
+			atBats = numberOfAtBats.nextInt();
+		} catch (InputMismatchException e) {
+			System.out.println("ERROR: Must enter valid number");
+			System.exit(0);
+
 		}
-		System.out.println("Please enter numer of singles");
+
+		if (atBats < 0) {
+			System.out.println("ERROR: CANNOT HAVE NEGATIVE at-bats");
+			main(null);
+
+		}
+		System.out.println("Please enter number of singles");
 		single = numberOfAtBats.nextInt();
+		if (single < 0) {
+			System.out.println("ERROR: Cannot have NEGATIVE at-bats");
+			main(null);
+		}
 		System.out.println("Please enter number of doubles");
 		Double = numberOfAtBats.nextInt();
+		if (Double < 0) {
+			System.out.println("ERROR: Cannot have NEGATIVE at-bats");
+			main(null);
+		}
 		System.out.println("Please enter number of triples");
 		triple = numberOfAtBats.nextInt();
+		if (triple < 0) {
+			System.out.println("ERROR: Cannot have NEGATIVE at-bats");
+			main(null);
+		}
 		System.out.println("Please enter number of Homeruns");
 		homerun = numberOfAtBats.nextInt();
-
-
-	
-
-	}
-
-	public static double calculateAverage() {
-		hits = single + Double + triple + homerun;
-		average = ((double) hits / (double) atBats);
-		
-		if (hits > atBats){
-			System.out.println("ERROR: Number of hits cannot be greater than number of at-bats");
-			
-			System.exit(0);
-			return(0);
-		}else{
-		return average;
+		if (homerun < 0) {
+			System.out.println("ERROR: Cannot have NEGATIVE at-bats");
+			main(null);
 		}
 
 	}
 
-	public static double calculateSlugging() {
+	public static float calculateAverage() {
+		hits = single + Double + triple + homerun;
+		average = ((float) hits / (float) atBats);
+
+		if (hits > atBats) {
+			System.out.println("ERROR: Number of hits cannot be greater than number of at-bats");
+			main(null);
+			return (0);
+		} else {
+			return average;
+		}
+
+	}
+
+	public static float calculateSlugging() {
 		bases = single + (Double * 2) + (triple * 3) + (homerun * 4);
-		slugging = ((double) bases / (double) atBats);
-		
+		slugging = ((float) bases / (float) atBats);
+
 		return slugging;
 	}
 
-	public void printAll(String name) {
+	public static void printAll(String name) {
 
-		System.out.printf("Your average is %.3f" , average);
+		System.out.printf("Your batting average is %.3f", average);
 		System.out.println();
-		System.out.printf("Your slugging percentage is %.3f" , slugging);
+		System.out.printf("Your slugging percentage is %.3f", slugging);
+		System.out.println();
+		System.out.println();
+		main(null);
 	}
 
 }
